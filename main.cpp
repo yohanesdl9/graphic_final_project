@@ -2,9 +2,6 @@
 #include "stdio.h"
 #include "math.h"
 
-#define checkImageWidth 64
-#define checkImageHeight 64
-
 GLUquadric *q = gluNewQuadric();
 GLfloat camY = 0;
 GLfloat camX = 0;
@@ -15,60 +12,58 @@ GLfloat dirZ = -15;
 GLfloat upX = 0;
 GLfloat upY = 1;
 GLfloat upZ = 0;
-GLfloat angle = 1;
-GLfloat direction = 1;
-GLfloat camera_angle = 90;
 int i = 0;
-/*  Create checkerboard texture  */
-static GLubyte checkImage[checkImageHeight][checkImageWidth][4];
-static GLuint texName;
-
-void makeCheckImage(void){
-   int i, j, c;
-   for (i = 0; i < checkImageHeight; i++) {
-      for (j = 0; j < checkImageWidth; j++) {
-         c = (((((i&0x8)==0)^((j&0x8)))==0))*255;
-         checkImage[i][j][0] = (GLubyte) c;
-         checkImage[i][j][1] = (GLubyte) c;
-         checkImage[i][j][2] = (GLubyte) c;
-         checkImage[i][j][3] = (GLubyte) 255;
-      }
-   }
-}
 
 void initGL(){
-    GLfloat sun_direction[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat sun_intensity[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat ambient_intensity[] = {0.3, 0.3, 0.3, 1.0};
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // set clear color to white
+    GLfloat sun_direction[] = { 0.0, 2.0, -1.0, 1.0 };
+    GLfloat sun_intensity[] = {0.7, 0.7, 0.7, 1.0};
+    GLfloat ambient_intensity[] = { 0.3, 0.3, 0.3, 1.0 };
+
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // set clear color to black
     glClearDepth(1.0f);
     glEnable(GL_DEPTH_TEST); // draw only closest surface
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_SMOOTH);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
     glEnable(GL_LIGHTING);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient_intensity);
+
     glEnable(GL_LIGHT0);                // Set up sunlight.
     glLightfv(GL_LIGHT0, GL_POSITION, sun_direction);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, sun_intensity);
+
     glEnable(GL_COLOR_MATERIAL);        // Configure glColor().
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-    makeCheckImage();
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glGenTextures(1, &texName);
-    glBindTexture(GL_TEXTURE_2D, texName);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, checkImageWidth,
-    checkImageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
 }
 
-void drawBola(GLfloat radius, GLint slices, GLint stacks, GLfloat r, GLfloat g, GLfloat b){
-    glColor3d(r, g, b);
+void drawBola(GLfloat radius, GLint slices, GLint stacks){
     gluQuadricTexture(q, true);
     gluSphere(q, radius, slices, stacks);
+}
+
+void Matahari(){
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+    glColor3f(1.0, 1.0, 0.0);
+    drawBola(1.5, 50, 50);
+    glDisable(GL_COLOR_MATERIAL);
+}
+
+void Bumi(){
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+    glColor3f(0.0, 0.5, 1.0);
+    drawBola(0.4, 50, 50);
+    glDisable(GL_COLOR_MATERIAL);
+}
+
+void Bulan(){
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+    glColor3f(0.75, 0.75, 0.75);
+    drawBola(0.15, 50, 50);
+    glDisable(GL_COLOR_MATERIAL);
 }
 
 void display(){
@@ -77,18 +72,19 @@ void display(){
     glLoadIdentity();
     gluLookAt(camX, camY, camZ, dirX, dirY, dirZ, upX, upY, upZ);
     glTranslatef(-2, 0, -15);
+    glPushMatrix();
     /* Matahari */
-    drawBola(1.5, 50, 50, 1, 0.75, 0);
+    Matahari();
     glPushMatrix();
     /* Bumi */
     glPopMatrix();
-    glTranslatef(5.5, 0, 0);
-    drawBola(0.4, 50, 50, 0.75, 0.75, 0.75);
+    glTranslatef(5, 0, 0);
+    Bumi();
     glPushMatrix();
     /* Bulan */
     glPopMatrix();
-    glTranslatef(2.5, 0, 0);
-    drawBola(0.7, 50, 50, 0, 0.3, 1);
+    glTranslatef(-1.5, 0, 0);
+    Bulan();
     glutSwapBuffers();
 }
 
@@ -114,24 +110,12 @@ void keyControl(int k, int x, int y) {
         case GLUT_KEY_DOWN:
             camZ-=0.1;
             break;
-        case GLUT_KEY_LEFT:
-            camera_angle--;
-            break;
-        case GLUT_KEY_RIGHT:
-            camera_angle++;
-            break;
-    }
-}
-
-void mouseControl(int button, int state, int x, int y){
-    switch(button) {
-        case GLUT_LEFT_BUTTON: direction = -direction; break;
     }
 }
 
 int main(int argc, char **argv){
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(960, 720);
     glutInitWindowPosition(50, 50);
     glutCreateWindow("Solar Eclipse Simulation");
@@ -139,8 +123,6 @@ int main(int argc, char **argv){
     glutReshapeFunc(reshape);
     initGL();
     glutTimerFunc(0, timer, 0);
-    glutSpecialFunc(keyControl);
-    glutMouseFunc(mouseControl);
     glutMainLoop();
     return EXIT_SUCCESS;
 }
