@@ -134,7 +134,7 @@ int main(int argc, char **argv){
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
     glutInitWindowSize(960, 720);
     glutInitWindowPosition(50, 50);
-    glutCreateWindow("3d-control");
+    glutCreateWindow("Solar Eclipse Simulation");
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     initGL();
