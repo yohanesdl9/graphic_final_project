@@ -37,32 +37,32 @@ void initGL(){
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 }
 
-void drawBola(GLfloat radius, GLint slices, GLint stacks){
+void drawBall(GLfloat radius, GLint slices, GLint stacks){
     gluQuadricTexture(q, true);
     gluSphere(q, radius, slices, stacks);
 }
 
-void Matahari(){
+void Sun(){
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor3f(1.0, 1.0, 0.0);
-    drawBola(1.5, 50, 50);
+    drawBall(1.5, 50, 50);
     glDisable(GL_COLOR_MATERIAL);
 }
 
-void Bumi(){
+void Earth(){
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor3f(0.0, 0.5, 1.0);
-    drawBola(0.4, 50, 50);
+    drawBall(0.4, 50, 50);
     glDisable(GL_COLOR_MATERIAL);
 }
 
-void Bulan(){
+void Moon(){
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor3f(0.75, 0.75, 0.75);
-    drawBola(0.15, 50, 50);
+    drawBall(0.15, 50, 50);
     glDisable(GL_COLOR_MATERIAL);
 }
 
@@ -73,18 +73,18 @@ void display(){
     gluLookAt(camX, camY, camZ, dirX, dirY, dirZ, upX, upY, upZ);
     glTranslatef(-2, 0, -15);
     glPushMatrix();
-    /* Matahari */
-    Matahari();
+    /* Sun */
+    Sun();
     glPushMatrix();
-    /* Bumi */
+    /* Earth */
     glPopMatrix();
     glTranslatef(5, 0, 0);
-    Bumi();
+    Earth();
     glPushMatrix();
-    /* Bulan */
+    /* Moon */
     glPopMatrix();
     glTranslatef(-1.5, 0, 0);
-    Bulan();
+    Moon();
     glutSwapBuffers();
 }
 
