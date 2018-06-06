@@ -12,6 +12,10 @@ GLfloat dirZ = -15;
 GLfloat upX = 0;
 GLfloat upY = 1;
 GLfloat upZ = 0;
+GLfloat earth_angle = 0.0f;
+GLfloat moon_angle = 0.0f;
+GLfloat earth_rev_spd = 0.015f;
+GLfloat moon_rev_spd = 0.09f;
 int i = 0;
 
 void initGL(){
@@ -21,7 +25,7 @@ void initGL(){
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // set clear color to black
     glClearDepth(1.0f);
-    glEnable(GL_DEPTH_TEST); // draw only closest surface
+    glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_SMOOTH);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -29,11 +33,11 @@ void initGL(){
     glEnable(GL_LIGHTING);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient_intensity);
 
-    glEnable(GL_LIGHT0);                // Set up sunlight.
+    glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_POSITION, sun_direction);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, sun_intensity);
 
-    glEnable(GL_COLOR_MATERIAL);        // Configure glColor().
+    glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 }
 
@@ -105,10 +109,10 @@ void reshape(GLsizei width, GLsizei height){
 void keyControl(int k, int x, int y) {
     switch(k) {
         case GLUT_KEY_UP:
-            camZ+=0.1;
+            camZ++;
             break;
         case GLUT_KEY_DOWN:
-            camZ-=0.1;
+            camZ--;
             break;
     }
 }
@@ -123,6 +127,7 @@ int main(int argc, char **argv){
     glutReshapeFunc(reshape);
     initGL();
     glutTimerFunc(0, timer, 0);
+    glutSpecialFunc(keyControl);
     glutMainLoop();
     return EXIT_SUCCESS;
 }
