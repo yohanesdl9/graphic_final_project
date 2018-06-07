@@ -12,11 +12,11 @@ GLfloat dirZ = -15;
 GLfloat upX = 0;
 GLfloat upY = 1;
 GLfloat upZ = 0;
-GLfloat earth_angle = 0.0f;
-GLfloat moon_angle = 0.0f;
-GLfloat earth_rev_spd = 0.015f;
-GLfloat moon_rev_spd = 0.09f;
-int i = 0;
+GLfloat earth_rev = 0.0f;
+GLfloat earth_dir = 0.15f;
+GLfloat rotasi_cahaya = 0.0f;
+GLfloat moon_rev = 0.0f;
+GLfloat moon_dir = 0.9f;
 
 void initGL(){
     GLfloat sun_direction[] = { 0.0, 2.0, -1.0, 1.0 };
@@ -39,6 +39,17 @@ void initGL(){
 
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+}
+
+void drawCone(){
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+    glColor4f(1.0, 1.0, 1.0, 0.1);
+    gluCylinder(q, 1.5, 0.0f, 5.0f, 60, 60);
+    gluDisk(q, 0.0f, 1.5f, 60, 60);
+    glDisable(GL_COLOR_MATERIAL);
 }
 
 void drawBall(GLfloat radius, GLint slices, GLint stacks){
@@ -80,15 +91,24 @@ void display(){
     /* Sun */
     Sun();
     glPushMatrix();
+    glPopMatrix();
+    glRotatef(rotasi_cahaya, 0.0f, 0.0f, 1.0f);
+    glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+    drawCone();
+    glPushMatrix();
     /* Earth */
     glPopMatrix();
+    glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+    glRotatef(earth_dir, 0.0f, 0.0f, 1.0f);
     glTranslatef(5, 0, 0);
     Earth();
     glPushMatrix();
     /* Moon */
     glPopMatrix();
-    glTranslatef(-1.5, 0, 0);
+    glRotatef(moon_rev, 0.0f, 0.0f, 1.0f);
+    glTranslatef(-1.5, 0, 0.0);
     Moon();
+    moon_rev += moon_dir;
     glutSwapBuffers();
 }
 
