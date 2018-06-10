@@ -108,6 +108,8 @@ void display(){
     glRotatef(moon_rev, 0.0f, 0.0f, 1.0f);
     glTranslatef(-1.5, 0, 0.0);
     Moon();
+    earth_rev += earth_dir;
+    rotasi_cahaya += earth_dir;
     moon_rev += moon_dir;
     glutSwapBuffers();
 }
@@ -140,7 +142,7 @@ void keyControl(int k, int x, int y) {
 int main(int argc, char **argv){
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(960, 720);
+    glutInitWindowSize(800, 600);
     glutInitWindowPosition(50, 50);
     glutCreateWindow("Solar Eclipse Simulation");
     glutDisplayFunc(display);
