@@ -61,7 +61,8 @@ void Sun(){
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor3f(1.0, 1.0, 0.0);
-    drawBall(1.5, 50, 50);
+    gluQuadricTexture(q, true);
+    gluSphere(q, 1.5, 50, 50);
     glDisable(GL_COLOR_MATERIAL);
 }
 
@@ -69,7 +70,8 @@ void Earth(){
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor3f(0.0, 0.5, 1.0);
-    drawBall(0.4, 50, 50);
+    gluQuadricTexture(q, true);
+    gluSphere(q, 0.4, 50, 50);
     glDisable(GL_COLOR_MATERIAL);
 }
 
@@ -77,7 +79,8 @@ void Moon(){
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor3f(0.75, 0.75, 0.75);
-    drawBall(0.15, 50, 50);
+    gluQuadricTexture(q, true);
+    gluSphere(q, 0.15, 50, 50);
     glDisable(GL_COLOR_MATERIAL);
 }
 
@@ -135,6 +138,12 @@ void keyControl(int k, int x, int y) {
             break;
         case GLUT_KEY_DOWN:
             camZ--;
+            break;
+        case GLUT_KEY_LEFT:
+            dirX++;
+            break;
+        case GLUT_KEY_RIGHT:
+            dirX--;
             break;
     }
 }
