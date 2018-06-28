@@ -17,6 +17,7 @@ GLfloat earth_dir = 0.15f;
 GLfloat rotasi_cahaya = 0.0f;
 GLfloat moon_rev = 0.0f;
 GLfloat moon_dir = 0.9f;
+GLfloat ZlookRot = 0.0f;
 
 void initGL(){
     GLfloat sun_direction[] = { 0.0, 2.0, -1.0, 1.0 };
@@ -25,7 +26,6 @@ void initGL(){
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // set clear color to black
     glClearDepth(1.0f);
-    glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_SMOOTH);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -42,6 +42,7 @@ void initGL(){
 }
 
 void drawCone(){
+    glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_COLOR_MATERIAL);
@@ -58,6 +59,7 @@ void drawBall(GLfloat radius, GLint slices, GLint stacks){
 }
 
 void Sun(){
+    glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor3f(1.0, 1.0, 0.0);
@@ -67,6 +69,7 @@ void Sun(){
 }
 
 void Earth(){
+    glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor3f(0.0, 0.5, 1.0);
@@ -76,6 +79,7 @@ void Earth(){
 }
 
 void Moon(){
+    glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor3f(0.75, 0.75, 0.75);
@@ -97,6 +101,7 @@ void display(){
     glPopMatrix();
     glRotatef(rotasi_cahaya, 0.0f, 0.0f, 1.0f);
     glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+    glTranslatef(0.0, 0.0, 0.1);
     drawCone();
     glPushMatrix();
     /* Earth */
@@ -104,6 +109,7 @@ void display(){
     glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
     glRotatef(earth_dir, 0.0f, 0.0f, 1.0f);
     glTranslatef(5, 0, 0);
+    Earth();
     Earth();
     glPushMatrix();
     /* Moon */
