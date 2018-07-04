@@ -110,7 +110,6 @@ void display(){
     glRotatef(earth_dir, 0.0f, 0.0f, 1.0f);
     glTranslatef(5, 0, 0);
     Earth();
-    Earth();
     glPushMatrix();
     /* Moon */
     glPopMatrix();
