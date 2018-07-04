@@ -12,7 +12,6 @@ GLfloat dirZ = -15;
 GLfloat upX = 0;
 GLfloat upY = 1;
 GLfloat upZ = 0;
-GLfloat earth_rev = 0.0f;
 GLfloat earth_dir = 0.15f;
 GLfloat rotasi_cahaya = 0.0f;
 GLfloat moon_rev = 0.0f;
@@ -97,26 +96,19 @@ void display(){
     glPushMatrix();
     /* Sun */
     Sun();
-    glPushMatrix();
-    glPopMatrix();
     glRotatef(rotasi_cahaya, 0.0f, 0.0f, 1.0f);
     glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
     glTranslatef(0.0, 0.0, 0.1);
     drawCone();
-    glPushMatrix();
     /* Earth */
-    glPopMatrix();
     glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
     glRotatef(earth_dir, 0.0f, 0.0f, 1.0f);
     glTranslatef(5, 0, 0);
     Earth();
-    glPushMatrix();
     /* Moon */
-    glPopMatrix();
     glRotatef(moon_rev, 0.0f, 0.0f, 1.0f);
     glTranslatef(-1.5, 0, 0.0);
     Moon();
-    earth_rev += earth_dir;
     rotasi_cahaya += earth_dir;
     moon_rev += moon_dir;
     glutSwapBuffers();
