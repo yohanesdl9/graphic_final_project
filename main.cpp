@@ -47,7 +47,7 @@ void drawCone(){
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor4f(1.0, 1.0, 1.0, 0.1);
-    gluCylinder(q, 1.5, 0.0f, 5.0f, 60, 60);
+    gluCylinder(q, 1.5, 0.0f, 6.5f, 60, 60);
     gluDisk(q, 0.0f, 1.5f, 60, 60);
     glDisable(GL_COLOR_MATERIAL);
 }
@@ -107,7 +107,7 @@ void display(){
     Earth();
     /* Moon */
     glRotatef(moon_rev, 0.0f, 0.0f, 1.0f);
-    glTranslatef(-1.5, 0, 0.0);
+    glTranslatef(1.5, 0, 0.0);
     Moon();
     rotasi_cahaya += earth_dir;
     moon_rev += moon_dir;
