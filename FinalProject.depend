@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1530710910 source:e:\kuliah\semester 6\pemrograman grafis\finalproject\main.cpp
+1530711108 source:e:\kuliah\semester 6\pemrograman grafis\finalproject\main.cpp
 	"GL/glut.h"
 	"stdio.h"
 	"math.h"
