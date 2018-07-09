@@ -40,15 +40,15 @@ void initGL(){
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 }
 
-void drawCone(GLfloat height, GLfloat alpha){
+void drawCone(GLfloat height, GLfloat alpha, GLfloat base_d){
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor4f(0.0, 0.0, 0.0, alpha);
-    gluCylinder(q, 1.5, 0.0f, height, 60, 60);
-    gluDisk(q, 0.0f, 1.5f, 60, 60);
+    gluCylinder(q, 1.5, base_d, height, 60, 60);
+    gluDisk(q, 0.0, 1.5f, 60, 60);
     glDisable(GL_COLOR_MATERIAL);
 }
 
@@ -99,7 +99,11 @@ void display(){
     glRotatef(rotasi_cahaya, 0.0f, 0.0f, 1.0f);
     glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
     glTranslatef(0.0, 0.0, 0.1);
-    drawCone(5.0f, 0.1f);
+    if ((int) moon_rev % 360 >= 165 && (int) moon_rev % 360 <= 195){
+        drawCone(3.5f, 0.1f, 0.5f);
+    } else {
+        drawCone(5.0f, 0.1f, 0.0f);
+    }
     /* Earth */
     glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
     glRotatef(earth_dir, 0.0f, 0.0f, 1.0f);
@@ -109,10 +113,6 @@ void display(){
     glRotatef(moon_rev, 0.0f, 0.0f, 1.0f);
     glTranslatef(1.5, 0, 0.0);
     Moon();
-    glPopMatrix();
-    glRotatef(rotasi_cahaya, 0.0f, 0.0f, 1.0f);
-    glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
-    drawCone(6.5f, 0.1f);
     rotasi_cahaya += earth_dir;
     moon_rev += moon_dir;
     glutSwapBuffers();
