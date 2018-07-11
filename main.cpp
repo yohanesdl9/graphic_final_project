@@ -98,7 +98,7 @@ void display(){
     Sun();
     glPushMatrix();
     glRotatef(rotasi_cahaya, 0.0f, 0.0f, 1.0f);
-    //glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+    glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
     glTranslatef(0.0, 0.0, 0.1);
     if ((int) moon_rev % 360 >= 165 && (int) moon_rev % 360 <= 195){
         drawCone(3.5f, 0.1f, 0.45f);
