@@ -135,16 +135,27 @@ void reshape(GLsizei width, GLsizei height){
 void keyControl(int k, int x, int y) {
     switch(k) {
         case GLUT_KEY_UP:
-            camZ++;
+            dirY--;
             break;
-        case GLUT_KEY_DOWN:
-            camZ--;
+        case GLUT_KEY_DOWNisMoving = true;:
+            dirY++;
             break;
         case GLUT_KEY_LEFT:
             dirX++;
             break;
         case GLUT_KEY_RIGHT:
             dirX--;
+            break;
+    }
+}
+
+void keyFunction(unsigned char key, int x, int y){
+    switch(key){
+        case 45:
+            camZ--;
+            break;
+        case 61:
+            camZ++;
             break;
     }
 }
@@ -160,6 +171,7 @@ int main(int argc, char **argv){
     initGL();
     glutTimerFunc(0, timer, 0);
     glutSpecialFunc(keyControl);
+    glutKeyboardFunc(keyFunction);
     glutMainLoop();
     return EXIT_SUCCESS;
 }
