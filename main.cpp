@@ -17,6 +17,7 @@ GLfloat rotasi_cahaya = 0.0f;
 GLfloat moon_rev = 0.0f;
 GLfloat moon_dir = 0.9f;
 GLfloat ZlookRot = 0.0f;
+bool isRotating = false;
 
 void initGL(){
     GLfloat sun_direction[] = { 0.0, 2.0, -1.0, 1.0 };
@@ -113,8 +114,10 @@ void display(){
     glRotatef(moon_rev, 0.0f, 0.0f, 1.0f);
     glTranslatef(1.5, 0, 0.0);
     Moon();
-    rotasi_cahaya += earth_dir;
-    moon_rev += moon_dir;
+    if (isRotating){
+        rotasi_cahaya += earth_dir;
+        moon_rev += moon_dir;
+    }
     glutSwapBuffers();
 }
 
@@ -137,7 +140,7 @@ void keyControl(int k, int x, int y) {
         case GLUT_KEY_UP:
             dirY--;
             break;
-        case GLUT_KEY_DOWNisMoving = true;:
+        case GLUT_KEY_DOWN:
             dirY++;
             break;
         case GLUT_KEY_LEFT:
@@ -156,6 +159,13 @@ void keyFunction(unsigned char key, int x, int y){
             break;
         case 61:
             camZ++;
+            break;
+        case 32:
+            if (isRotating){
+                isRotating = false;
+            } else {
+                isRotating = true;
+            }
             break;
     }
 }
