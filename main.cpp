@@ -160,6 +160,7 @@ int main(int argc, char **argv){
     initGL();
     glutTimerFunc(0, timer, 0);
     glutSpecialFunc(keyControl);
+
     glutMainLoop();
     return EXIT_SUCCESS;
 }
