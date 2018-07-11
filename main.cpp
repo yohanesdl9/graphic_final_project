@@ -137,16 +137,16 @@ void reshape(GLsizei width, GLsizei height){
 
 void keyControl(int k, int x, int y) {
     switch(k) {
-        case GLUT_KEY_UP:
+        case GLUT_KEY_UP: //arrow up
             dirY--;
             break;
-        case GLUT_KEY_DOWN:
+        case GLUT_KEY_DOWN: //arrow down
             dirY++;
             break;
-        case GLUT_KEY_LEFT:
+        case GLUT_KEY_LEFT: //arrow left
             dirX++;
             break;
-        case GLUT_KEY_RIGHT:
+        case GLUT_KEY_RIGHT: //arrow right
             dirX--;
             break;
     }
@@ -154,13 +154,13 @@ void keyControl(int k, int x, int y) {
 
 void keyFunction(unsigned char key, int x, int y){
     switch(key){
-        case 45:
+        case 45: //minus
             camZ--;
             break;
-        case 61:
+        case 61: //plus
             camZ++;
             break;
-        case 32:
+        case 32: //space
             if (isRotating){
                 isRotating = false;
             } else {
