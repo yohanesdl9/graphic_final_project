@@ -6,7 +6,7 @@ GLUquadric *q = gluNewQuadric();
 GLfloat camY = 0;
 GLfloat camX = 0;
 GLfloat camZ = 0;
-GLfloat dirX = 0;
+GLfloat dirX = -2;
 GLfloat dirY = 0;
 GLfloat dirZ = -15;
 GLfloat upX = 0;
@@ -100,7 +100,7 @@ void display(){
     glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
     glTranslatef(0.0, 0.0, 0.1);
     if ((int) moon_rev % 360 >= 165 && (int) moon_rev % 360 <= 195){
-        drawCone(3.5f, 0.1f, 0.5f);
+        drawCone(3.5f, 0.1f, 0.45f);
     } else {
         drawCone(5.0f, 0.1f, 0.0f);
     }
