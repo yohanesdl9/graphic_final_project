@@ -241,3 +241,8 @@
 1341006774 c:\program files (x86)\codeblocks\mingw\include\math.h
 	<_mingw.h>
 
+1531291283 source:d:\finalproject\main.cpp
+	"GL/glut.h"
+	"stdio.h"
+	"math.h"
+
