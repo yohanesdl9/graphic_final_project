@@ -18,23 +18,7 @@ GLfloat earth_dir = 0.15f;
 GLfloat rotasi_cahaya = 0.0f;
 GLfloat moon_rev = 0.0f;
 GLfloat moon_dir = 0.9f;
-GLfloat earth_rotation = 0.0f;
-GLfloat moon_rotation = 0.0f;
 bool isRotating = false;
-
-void drawAxis(){
-    glBegin(GL_LINES);
-    glColor3f(1,0,0); // red
-    glVertex3f(0,0,0);
-    glVertex3f(1,0,0); // x
-    glColor3f(0,0,1); // blue
-    glVertex3f(0,0,0);
-    glVertex3f(0,1,0); // y
-    glColor3f(0,1,0); // green
-    glVertex3f(0,0,0);
-    glVertex3f(0,0,1); // z
-    glEnd();
-}
 
 void initGL(){
     GLfloat sun_direction[] = { 0.0, 2.0, -1.0, 1.0 };
@@ -129,8 +113,6 @@ void display(){
         rotasi_cahaya += earth_dir;
         moon_rev += moon_dir;
     }
-    earth_rotation++;
-    moon_rotation++;
     glutSwapBuffers();
 }
 
