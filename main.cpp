@@ -1,6 +1,8 @@
 #include "GL/glut.h"
 #include "stdio.h"
 #include "math.h"
+#define checkImageWidth 64
+#define checkImageHeight 64
 
 GLUquadric *q = gluNewQuadric();
 GLfloat camY = 0;
@@ -16,27 +18,38 @@ GLfloat earth_dir = 0.15f;
 GLfloat rotasi_cahaya = 0.0f;
 GLfloat moon_rev = 0.0f;
 GLfloat moon_dir = 0.9f;
-GLfloat ZlookRot = 0.0f;
+GLfloat earth_rotation = 0.0f;
+GLfloat moon_rotation = 0.0f;
 bool isRotating = false;
+
+void drawAxis(){
+    glBegin(GL_LINES);
+    glColor3f(1,0,0); // red
+    glVertex3f(0,0,0);
+    glVertex3f(1,0,0); // x
+    glColor3f(0,0,1); // blue
+    glVertex3f(0,0,0);
+    glVertex3f(0,1,0); // y
+    glColor3f(0,1,0); // green
+    glVertex3f(0,0,0);
+    glVertex3f(0,0,1); // z
+    glEnd();
+}
 
 void initGL(){
     GLfloat sun_direction[] = { 0.0, 2.0, -1.0, 1.0 };
     GLfloat sun_intensity[] = {0.7, 0.7, 0.7, 1.0};
     GLfloat ambient_intensity[] = { 0.3, 0.3, 0.3, 1.0 };
-
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // set clear color to black
     glClearDepth(1.0f);
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_SMOOTH);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
     glEnable(GL_LIGHTING);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient_intensity);
-
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_POSITION, sun_direction);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, sun_intensity);
-
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 }
@@ -96,7 +109,6 @@ void display(){
     glTranslatef(-2, 0, -15);
     /* Sun */
     Sun();
-    glPushMatrix();
     glRotatef(rotasi_cahaya, 0.0f, 0.0f, 1.0f);
     glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
     glTranslatef(0.0, 0.0, 0.1);
@@ -107,7 +119,6 @@ void display(){
     }
     /* Earth */
     glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
-    glRotatef(earth_dir, 0.0f, 0.0f, 1.0f);
     glTranslatef(5, 0, 0);
     Earth();
     /* Moon */
@@ -118,6 +129,8 @@ void display(){
         rotasi_cahaya += earth_dir;
         moon_rev += moon_dir;
     }
+    earth_rotation++;
+    moon_rotation++;
     glutSwapBuffers();
 }
 
