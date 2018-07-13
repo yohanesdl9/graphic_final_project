@@ -162,6 +162,16 @@ void keyFunction(unsigned char key, int x, int y){
                 isRotating = true;
             }
             break;
+        case 48: // 0
+            if (earth_dir >= 0.15 && moon_dir >= 0.9){
+                earth_dir -= 0.075;
+                moon_dir -= 0.45;
+            }
+            break;
+        case 57: // 9
+            earth_dir += 0.075;
+            moon_dir += 0.45;
+            break;
     }
 }
 
