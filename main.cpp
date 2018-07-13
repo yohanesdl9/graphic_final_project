@@ -1,8 +1,6 @@
 #include "GL/glut.h"
 #include "stdio.h"
 #include "math.h"
-#define checkImageWidth 64
-#define checkImageHeight 64
 
 GLUquadric *q = gluNewQuadric();
 GLfloat camY = 0;
