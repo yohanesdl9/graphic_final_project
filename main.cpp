@@ -148,10 +148,14 @@ void keyControl(int k, int x, int y) {
 void keyFunction(unsigned char key, int x, int y){
     switch(key){
         case 45: //minus
-            camZ--;
+            if(camZ >= -5) {
+                camZ--;
+            }
             break;
         case 61: //plus
-            camZ++;
+            if (camZ <= 15) {
+                camZ++;
+            }
             break;
         case 32: //space
             if (isRotating){
