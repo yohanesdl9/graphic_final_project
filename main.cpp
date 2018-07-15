@@ -16,6 +16,8 @@ GLfloat earth_dir = 0.15f;
 GLfloat rotasi_cahaya = 0.0f;
 GLfloat moon_rev = 0.0f;
 GLfloat moon_dir = 0.9f;
+GLfloat venus_rev = 0.0f;
+GLfloat venus_dir = -0.4f;
 bool isRotating = false;
 
 void initGL(){
@@ -63,6 +65,16 @@ void Sun(){
     glDisable(GL_COLOR_MATERIAL);
 }
 
+void Venus(){
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+    glColor3f(1.0, 0.0, 0.0);
+    gluQuadricTexture(q, true);
+    gluSphere(q, 0.4, 50, 50);
+    glDisable(GL_COLOR_MATERIAL);
+}
+
 void Earth(){
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
@@ -91,6 +103,7 @@ void display(){
     glTranslatef(-2, 0, -15);
     /* Sun */
     Sun();
+    glPushMatrix();
     glRotatef(rotasi_cahaya, 0.0f, 0.0f, 1.0f);
     glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
     glTranslatef(0.0, 0.0, 0.1);
@@ -107,9 +120,14 @@ void display(){
     glRotatef(moon_rev, 0.0f, 0.0f, 1.0f);
     glTranslatef(1.5, 0, 0.0);
     Moon();
+    glPopMatrix();
+    glRotatef(venus_rev, 0.0, 0.0, 1.0);
+    glTranslatef(3, 0.0, 0.0);
+    Venus();
     if (isRotating){
         rotasi_cahaya += earth_dir;
         moon_rev += moon_dir;
+        venus_rev += venus_dir;
     }
     glutSwapBuffers();
 }
