@@ -38,15 +38,15 @@ void initGL(){
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 }
 
-void drawCone(GLfloat height, GLfloat alpha, GLfloat base_d){
+void drawCone(GLfloat height, GLfloat alpha, GLfloat top, GLfloat base_d){
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glColor4f(0.0, 0.0, 0.0, alpha);
-    gluCylinder(q, 1.5, base_d, height, 60, 60);
-    gluDisk(q, 0.0, 1.5f, 60, 60);
+    gluCylinder(q, top, base_d, height, 60, 60);
+    gluDisk(q, 0.0, top, 60, 60);
     glDisable(GL_COLOR_MATERIAL);
 }
 
@@ -108,13 +108,17 @@ void display(){
     glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
     glTranslatef(0.0, 0.0, 0.1);
     if ((int) moon_rev % 360 >= 165 && (int) moon_rev % 360 <= 195){
-        drawCone(3.5f, 0.1f, 0.45f);
+        drawCone(3.5f, 0.1f, 1.5f, 0.45f);
+        glTranslatef(0, 0, 3.5f);
+        drawCone(1.5f, 0.5f, 0.45f, 0.0f);
+        glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+        glTranslatef(1.5, 0, 0);
     } else {
-        drawCone(5.0f, 0.1f, 0.0f);
+        drawCone(5.0f, 0.1f, 1.5f, 0.0f);
+        glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+        glTranslatef(5, 0, 0);
     }
     /* Earth */
-    glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
-    glTranslatef(5, 0, 0);
     Earth();
     /* Moon */
     glRotatef(moon_rev, 0.0f, 0.0f, 1.0f);
